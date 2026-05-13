@@ -155,11 +155,6 @@ impl StateManager {
         )
     }
 
-    pub fn is_permission_locked(&self) -> bool {
-        self.current == PetState::Permission
-            && Self::now_ms() - self.last_transition < 1500
-    }
-
     pub fn current_state(&self) -> &PetState {
         &self.current
     }
@@ -214,7 +209,7 @@ mod tests {
         );
         assert_eq!(
             PetState::Running.bubble_text(Some("WebFetch")),
-            "正在搜索网络..."
+            "正在获取网络内容..."
         );
     }
 

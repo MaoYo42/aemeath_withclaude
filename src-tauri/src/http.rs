@@ -58,11 +58,6 @@ async fn handle_state(
     let animation = pet_state.animation_name().to_string();
     let bubble = pet_state.bubble_text(tool.as_deref()).to_string();
 
-    println!(
-        "[HTTP] state: s={} tool={:?} => animation={} bubble={}",
-        body.s, tool, animation, bubble
-    );
-
     {
         let mut mgr = app.state.lock().await;
         mgr.set_state(pet_state, tool);
@@ -146,10 +141,6 @@ async fn handle_hook_permission(
 async fn set_pet_state(app: &AppState, state: PetState, tool: Option<String>) {
     {
         let mgr = app.state.lock().await;
-        // Protect permission bubble from being overwritten
-        if state != PetState::Permission && mgr.is_permission_locked() {
-            return;
-        }
         // Protect tool bubble minimum display time (all active states)
         let is_active = matches!(mgr.current_state(),
             PetState::Running | PetState::Chatting | PetState::Fetching

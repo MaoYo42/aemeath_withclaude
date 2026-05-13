@@ -28,3 +28,6 @@ node_modules/
 
 # Local settings (personal tokens, permissions)
 .claude/settings.local.json
+
+# Debug tracking
+debug/
