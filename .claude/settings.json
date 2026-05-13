@@ -3,67 +3,55 @@
     "SessionStart": [
       {
         "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell -Command \"if (-not (Get-Process -Name 'aemeath-claude' -ErrorAction SilentlyContinue)) { Start-Process 'D:/path/to/aemeath-claude.exe' }\""
-          }
-        ]
+        "hooks": [{
+          "type": "command",
+          "command": "powershell -Command \"if (-not (Get-Process -Name 'aemeath-claude' -ErrorAction SilentlyContinue)) { Start-Process 'D:/path/to/aemeath-claude.exe' }\""
+        }]
       }
     ],
     "UserPromptSubmit": [
       {
         "matcher": "",
-        "hooks": [
-          {
-            "type": "http",
-            "url": "http://127.0.0.1:9527/api/hook/thinking"
-          }
-        ]
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/thinking"
+        }]
       }
     ],
     "PreToolUse": [
       {
         "matcher": "",
-        "hooks": [
-          {
-            "type": "http",
-            "url": "http://127.0.0.1:9527/api/hook/working"
-          }
-        ]
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/working"
+        }]
       }
     ],
     "PostToolUse": [
       {
         "matcher": "",
-        "hooks": [
-          {
-            "type": "http",
-            "url": "http://127.0.0.1:9527/api/hook/done"
-          }
-        ]
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/done"
+        }]
       }
     ],
     "Stop": [
       {
         "matcher": "",
-        "hooks": [
-          {
-            "type": "http",
-            "url": "http://127.0.0.1:9527/api/hook/idle"
-          }
-        ]
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/idle"
+        }]
       }
     ],
     "PermissionRequest": [
       {
         "matcher": "",
-        "hooks": [
-          {
-            "type": "http",
-            "url": "http://127.0.0.1:9527/api/hook/permission"
-          }
-        ]
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/permission"
+        }]
       }
     ]
   }
