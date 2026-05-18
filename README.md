@@ -46,20 +46,37 @@ Aemeath Pet (Tauri Desktop App)
 
 ## 安装
 
-### 1. 启动桌宠
-
-从 [Releases](../../releases) 下载 `aemeath-claude.exe`，或自己构建：
+### Windows
 
 ```bash
 npm install
 cargo build --manifest-path src-tauri/Cargo.toml --release
 ```
 
-产出在 `src-tauri/target/release/`。
-
-### 2. 配置 Claude Code
+产出在 `src-tauri/target/release/aemeath-claude.exe`。
 
 将 [docs/hooks.json](docs/hooks.json) 合并到 `~/.claude/settings.json`，将 [docs/mcp.json](docs/mcp.json) 写入 `~/.claude/.mcp.json`，然后重启 Claude Code。注意替换 hooks.json 中 `SessionStart` 里 `aemeath-claude.exe` 的实际路径。
+
+### Linux
+
+**前置要求：** Rust、Node.js、webkit2gtk 等（[Tauri 前置条件](https://v2.tauri.app/start/prerequisites/)）
+
+```bash
+# Arch Linux
+sudo pacman -S webkit2gtk-4.1 libappindicator-gtk3 gtk3 libsoup3
+
+# 构建
+npm install
+cargo build --manifest-path src-tauri/Cargo.toml --release
+
+# 自动配置 Claude Code hooks + MCP
+chmod +x setup-linux.sh
+./setup-linux.sh
+```
+
+产出在 `src-tauri/target/release/aemeath-claude`。
+
+> 其他发行版请参考 Tauri 文档安装对应依赖。
 
 ## 端口
 

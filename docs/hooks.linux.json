@@ -1,0 +1,58 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [{
+          "type": "command",
+          "command": "if ! pgrep -x 'aemeath-claude' > /dev/null; then (nohup /home/maoyo/aemeath_withclaude/src-tauri/target/release/aemeath-claude &>/dev/null &); fi"
+        }]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/thinking"
+        }]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/working"
+        }]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/done"
+        }]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/idle"
+        }]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [{
+          "type": "http",
+          "url": "http://127.0.0.1:9527/api/hook/permission"
+        }]
+      }
+    ]
+  }
+}
