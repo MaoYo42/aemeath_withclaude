@@ -11,6 +11,24 @@ Q 版像素爱弥斯桌宠，与 Claude Code 实时联动。
 3. 将 [docs/mcp.json](docs/mcp.json) 写入 `~/.claude/.mcp.json`
 4. 重启 Claude Code
 
+### macOS
+
+```bash
+# 1. 构建
+npm install
+npm run tauri build
+
+# 2. 配置 Claude Code 联动
+chmod +x setup-macos.sh
+./setup-macos.sh
+
+# 3. 重启 Claude Code
+```
+
+产出：
+- App Bundle: `src-tauri/target/release/bundle/macos/Aemeath Claude Pet.app`
+- DMG: `src-tauri/target/release/bundle/dmg/Aemeath Claude Pet_0.1.0_aarch64.dmg`
+
 ### Linux
 
 ```bash
@@ -33,7 +51,8 @@ chmod +x setup-linux.sh
 ## 启动
 
 - 桌宠会自动随 Claude Code 启动（通过 hooks 配置）
-- 手动启动：`./src-tauri/target/release/aemeath-claude &`
+- macOS：`open 'src-tauri/target/release/bundle/macos/Aemeath Claude Pet.app'`
+- Linux：`./src-tauri/target/release/aemeath-claude &`
 
 ## 端口
 
@@ -44,6 +63,9 @@ chmod +x setup-linux.sh
 
 ```bash
 npm install
+# macOS
+npm run tauri build
+# Linux / Windows
 cargo build --manifest-path src-tauri/Cargo.toml --release
 ```
 
@@ -53,7 +75,7 @@ cargo build --manifest-path src-tauri/Cargo.toml --release
 
 - [Rust](https://rustup.rs/) (stable toolchain)
 - [Node.js](https://nodejs.org/) >= 18
-- Windows 10+ 或 Linux（需要 webkit2gtk）
+- Windows 10+, macOS 11+, 或 Linux（需要 webkit2gtk）
 
 ## 目录结构
 

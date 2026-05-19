@@ -57,6 +57,26 @@ cargo build --manifest-path src-tauri/Cargo.toml --release
 
 将 [docs/hooks.json](docs/hooks.json) 合并到 `~/.claude/settings.json`，将 [docs/mcp.json](docs/mcp.json) 写入 `~/.claude/.mcp.json`，然后重启 Claude Code。注意替换 hooks.json 中 `SessionStart` 里 `aemeath-claude.exe` 的实际路径。
 
+### macOS
+
+**前置要求：** [Rust](https://rustup.rs/)、[Node.js](https://nodejs.org/) >= 18
+
+```bash
+# 构建
+npm install
+npm run tauri build
+
+# 自动配置 Claude Code hooks + MCP
+chmod +x setup-macos.sh
+./setup-macos.sh
+```
+
+产出：
+- App Bundle: `src-tauri/target/release/bundle/macos/Aemeath Claude Pet.app`
+- DMG: `src-tauri/target/release/bundle/dmg/Aemeath Claude Pet_0.1.0_aarch64.dmg`
+
+> macOS 自带 WebKit，无需额外系统依赖。
+
 ### Linux
 
 **前置要求：** Rust、Node.js、webkit2gtk 等（[Tauri 前置条件](https://v2.tauri.app/start/prerequisites/)）

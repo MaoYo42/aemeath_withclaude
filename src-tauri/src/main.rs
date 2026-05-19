@@ -9,7 +9,7 @@ use state::StateManager;
 use state::StateChangeEvent;
 use std::sync::Arc;
 use tokio::sync::{broadcast, Mutex};
-use tauri::Emitter;
+use tauri::{Emitter, Manager};
 
 #[tokio::main]
 async fn main() {
@@ -60,6 +60,37 @@ async fn main() {
                     bubble: "爱弥斯已上线~".to_string(),
                 },
             );
+
+            // macOS: 使用原生 API 强制窗口透明
+            #[cfg(target_os = "macos")]
+            if let Some(window) = app.get_webview_window("aemeath") {
+                let _ = window.set_background_color(Some(tauri::window::Color(0, 0, 0, 0)));
+                unsafe {
+                    use objc2::msg_send;
+                    use objc2::runtime::AnyObject;
+
+                    // 获取 NSWindow 并强制透明
+                    if let Ok(ns_window_ptr) = window.ns_window() {
+                        let ns_window = ns_window_ptr as *mut AnyObject;
+                        // setOpaque:NO + setBackgroundColor:clearColor
+                        let _: () = msg_send![ns_window, setOpaque: 0u8];
+                        let nil: *mut AnyObject = std::ptr::null_mut();
+                        let _: () = msg_send![ns_window, setBackgroundColor: nil];
+                    }
+
+                    // 注入 JS 确保 CSS 透明
+                    let js = r#"
+                        (function(){
+                            document.documentElement.style.setProperty('background','transparent','important');
+                            document.body.style.setProperty('background','transparent','important');
+                            var style = document.createElement('style');
+                            style.textContent = 'html,body{background:transparent!important;background-color:transparent!important}';
+                            document.head.appendChild(style);
+                        })();
+                    "#;
+                    let _ = window.eval(js);
+                }
+            }
 
             // Enable system tray
             if let Err(e) = tray::setup(app) {
